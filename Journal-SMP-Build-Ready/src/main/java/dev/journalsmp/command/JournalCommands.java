@@ -8,7 +8,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
-import net.minecraft.commands.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.minecraft.server.level.ServerPlayer;
 
 public final class JournalCommands {
