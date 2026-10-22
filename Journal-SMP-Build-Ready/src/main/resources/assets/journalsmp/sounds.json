@@ -1,0 +1,55 @@
+{
+  "lavender_town_snippet": {
+    "sounds": ["journalsmp:lavender_town_snippet"]
+  },
+  "dreadwalker_night": {
+    "sounds": ["journalsmp:dreadwalker_night"]
+  },
+  "poison": {
+    "sounds": ["journalsmp:poison"]
+  },
+  "leftovers_healing": {
+    "sounds": ["journalsmp:leftovers_healing"]
+  },
+  "pokemon_center_healing": {
+    "sounds": ["journalsmp:pokemon_center_healing"]
+  },
+  "hyper_beam": {
+    "sounds": ["journalsmp:hyper_beam"]
+  },
+  "swift": {
+    "sounds": ["journalsmp:swift"]
+  },
+  "swords_dance": {
+    "sounds": ["journalsmp:swords_dance"]
+  },
+  "protect": {
+    "sounds": ["journalsmp:protect"]
+  },
+  "critical_hit": {
+    "sounds": ["journalsmp:critical_hit"]
+  },
+  "night_shade": {
+    "sounds": ["journalsmp:night_shade"]
+  },
+  "pay_day": {
+    "sounds": ["journalsmp:pay_day"]
+  },
+  "level_up": {
+    "sounds": ["journalsmp:level_up"]
+  },
+  "iron_defense": {
+    "sounds": ["journalsmp:iron_defense"]
+  },
+  "thunder": {
+    "sounds": ["journalsmp:thunder"]
+  },
+  "pokemon_memoir_elite_four": {
+    "sounds": [
+      {
+        "name": "journalsmp:pokemon_memoir_elite_four",
+        "stream": true
+      }
+    ]
+  }
+}

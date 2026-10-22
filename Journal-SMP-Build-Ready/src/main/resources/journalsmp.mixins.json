@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "package": "dev.journalsmp.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PlayerExtraSaturationMixin",
+    "JournalCraftClaimMixin",
+    "AcePlacementReachServerMixin",
+    "CrafterClaimMixin",
+    "MobTargetMixin",
+    "PlayerExperienceMixin"
+  ],
+  "client": [
+    "AcePlacementReachClientMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
