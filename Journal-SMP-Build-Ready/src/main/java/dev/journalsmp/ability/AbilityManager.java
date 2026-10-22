@@ -583,13 +583,14 @@ public final class AbilityManager {
                                 2, 0.3, 0.3, 0.3, 0.015);
                     }
                 }
-                if (serverTick % 20 == 0) {
-                    AABB attackArea = new AABB(start, end).inflate(0.8);
+Vec3 attackEnd = end;
+if (serverTick % 20 == 0) {
+    AABB attackArea = new AABB(start, end).inflate(0.8);
                     for (LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, attackArea,
                             candidate -> candidate != player && candidate.isAlive()
                                     && (!(candidate instanceof ServerPlayer other)
                                     || player.canHarmPlayer(other))
-                                    && candidate.getBoundingBox().inflate(0.7).clip(start, end).isPresent())) {
+&& candidate.getBoundingBox().inflate(0.7).clip(start, attackEnd).isPresent())) {
                         target.hurtServer(level, player.damageSources().playerAttack(player), 4.0F);
                     }
                 }
