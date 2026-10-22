@@ -1,0 +1,20 @@
+JOURNAL SMP FABRIC MOD — GITHUB BUILD-READY PACKAGE
+
+IMPORTANT: This ZIP is arranged with build.gradle, gradlew, settings.gradle,
+gradle.properties, gradle/ and src/ at the archive root.
+
+HOW TO USE
+1. Create/open your GitHub repository.
+2. Extract this ZIP on your computer.
+3. Upload the CONTENTS of the extracted folder to the ROOT of the repository,
+   not the enclosing folder. The repository root should show build.gradle,
+   gradlew, settings.gradle, gradle.properties, gradle/ and src/.
+4. Commit the files. Open the repository's Actions tab and select
+   “Build Journal SMP Mod”. A push to main/master also starts the workflow.
+5. Open the completed workflow run and download the artifact named
+   journalsmp-fabric-1.21.11. Extract that artifact ZIP to get the mod JAR.
+
+TARGET CONFIGURATION
+Minecraft Java Edition 1.21.11; Java 21; Fabric Loader 0.18.1; Fabric API
+version configured in gradle.properties. Build success does not replace testing
+on a backup server. Install the mod and required dependencies where appropriate.
