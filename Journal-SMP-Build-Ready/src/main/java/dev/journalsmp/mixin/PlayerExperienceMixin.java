@@ -35,7 +35,7 @@ public abstract class PlayerExperienceMixin {
         if (player instanceof ServerPlayer serverPlayer
                 && JournalItems.kindOf(player.getOffhandItem()) == JournalKind.POKEMON
                 && player.experienceLevel > journalsmp$levelBeforeExperience) {
-            serverPlayer.serverLevel().playSound(null, player.getX(), player.getY(), player.getZ(),
+serverPlayer.level().playSound(null, player.getX(), player.getY(), player.getZ(),
                     JournalSounds.LEVEL_UP, SoundSource.PLAYERS, 0.8F, 1.0F);
         }
     }
