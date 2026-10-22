@@ -30,7 +30,7 @@ public final class PokemonMemoirMusic {
         if (active == null) {
             return;
         }
-        active.stop();
+Minecraft.getInstance().getSoundManager().stop(active);
         Minecraft.getInstance().getSoundManager().stop(active);
         active = null;
     }
