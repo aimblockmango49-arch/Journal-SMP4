@@ -1,0 +1,83 @@
+package dev.journalsmp.event;
+
+import dev.journalsmp.ability.AbilityManager;
+import dev.journalsmp.JournalItems;
+import dev.journalsmp.JournalKind;
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.event.player.UseItemCallback;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+
+public final class JournalEvents {
+    private JournalEvents() {
+    }
+
+    public static void register() {
+        ServerTickEvents.END_SERVER_TICK.register(AbilityManager::tickServer);
+
+        ServerLivingEntityEvents.AFTER_DAMAGE.register((entity, source, baseDamage, damageTaken, blocked) -> {
+            if (source.getEntity() instanceof ServerPlayer attacker) {
+                AbilityManager.handleSuccessfulHit(attacker, entity, source, blocked, damageTaken);
+            }
+            if (entity instanceof ServerPlayer victim && damageTaken > 0.0F
+                    && JournalItems.kindOf(victim.getOffhandItem()) == JournalKind.POKEMON) {
+                victim.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                        net.minecraft.world.effect.MobEffects.RESISTANCE, 5 * 20, 0, false, true, true));
+            }
+        });
+        ServerLivingEntityEvents.AFTER_DEATH.register((entity, source) -> {
+            if (entity instanceof ServerPlayer player) {
+                AbilityManager.cleanup(player);
+            }
+        });
+
+        AttackEntityCallback.EVENT.register((player, world, hand, target, hitResult) -> {
+            if (player instanceof ServerPlayer serverPlayer && AbilityManager.isActionLocked(serverPlayer)) {
+                serverPlayer.displayClientMessage(
+                        net.minecraft.network.chat.Component.literal("Bankruptcy prevents you from attacking.")
+                                .withStyle(net.minecraft.ChatFormatting.RED), true);
+                return InteractionResult.FAIL;
+            }
+            if (player instanceof ServerPlayer serverPlayer) {
+                AbilityManager.markAttack(serverPlayer, hand, target);
+            }
+            return InteractionResult.PASS;
+        });
+
+        UseItemCallback.EVENT.register((player, world, hand) -> {
+            if (player instanceof ServerPlayer serverPlayer && AbilityManager.isActionLocked(serverPlayer)) {
+                serverPlayer.displayClientMessage(
+                        net.minecraft.network.chat.Component.literal("Bankruptcy prevents you from using items.")
+                                .withStyle(net.minecraft.ChatFormatting.RED), true);
+                return InteractionResult.FAIL;
+            }
+            return InteractionResult.PASS;
+        });
+
+        UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
+            if (player instanceof ServerPlayer serverPlayer
+                    && AbilityManager.isActionLocked(serverPlayer)) {
+                return InteractionResult.FAIL;
+            }
+            return InteractionResult.PASS;
+        });
+
+        PlayerBlockBreakEvents.BEFORE.register((world, player, pos, state, blockEntity) ->
+                !(player instanceof ServerPlayer serverPlayer) || !AbilityManager.isActionLocked(serverPlayer));
+        PlayerBlockBreakEvents.AFTER.register((world, player, pos, state, blockEntity) -> {
+            if (player instanceof ServerPlayer serverPlayer
+                    && JournalItems.kindOf(serverPlayer.getOffhandItem()) == JournalKind.POKEMON) {
+                serverPlayer.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                        net.minecraft.world.effect.MobEffects.HASTE, 5 * 20, 0, false, true, true));
+            }
+        });
+
+        ServerPlayerEvents.LEAVE.register(AbilityManager::cleanup);
+    }
+}
